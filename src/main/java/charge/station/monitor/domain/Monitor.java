@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class PowerImage {
+public class Monitor {
     @Id
     @GeneratedValue
-    @Column(name = "power_image_id")
+    @Column(name = "monitor_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

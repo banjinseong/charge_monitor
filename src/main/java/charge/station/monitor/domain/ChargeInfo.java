@@ -23,7 +23,7 @@ public class ChargeInfo {
     private int code;
 
     @OneToMany(mappedBy = "chargeInfo")
-    private List<PowerImage> powerImages = new ArrayList<>();
+    private List<Monitor> monitors = new ArrayList<>();
 
     @OneToMany(mappedBy = "chargeInfo")
     private List<InOut> inOuts = new ArrayList<>();

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SiteReqeustDto {
+public class SiteRequestDto {
     private String name;
 
     private String location;

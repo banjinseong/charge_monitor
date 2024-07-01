@@ -4,7 +4,7 @@ import charge.station.monitor.domain.ChargeInfo;
 import charge.station.monitor.domain.Site;
 import charge.station.monitor.dto.ChargeInfoReqeustDto;
 import charge.station.monitor.dto.ChargeInfoResponseDto;
-import charge.station.monitor.dto.SiteReqeustDto;
+import charge.station.monitor.dto.SiteRequestDto;
 import charge.station.monitor.dto.SiteResponseDto;
 import charge.station.monitor.service.ChargeInfoService;
 import charge.station.monitor.service.SiteService;
@@ -50,7 +50,7 @@ public class ChargeController {
      * @return
      */
     @PostMapping("/addSite")
-    public ResponseEntity<Long> addSite(@Valid SiteReqeustDto dto){
+    public ResponseEntity<Long> addSite(@Valid SiteRequestDto dto){
         Long id = siteService.addSite(dto);
         return ResponseEntity.status(HttpStatus.OK).body(id);
     }

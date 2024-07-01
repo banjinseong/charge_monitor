@@ -1,7 +1,7 @@
 package charge.station.monitor.service;
 
 import charge.station.monitor.domain.Site;
-import charge.station.monitor.dto.SiteReqeustDto;
+import charge.station.monitor.dto.SiteRequestDto;
 import charge.station.monitor.repository.SiteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class SiteService {
     private final SiteRepository siteRepository;
 
     @Transactional
-    public Long addSite(SiteReqeustDto dto){
+    public Long addSite(SiteRequestDto dto){
         Site site = Site.builder()
                 .name(dto.getName())
                 .location(dto.getLocation())
