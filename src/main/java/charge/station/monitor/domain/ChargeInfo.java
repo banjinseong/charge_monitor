@@ -1,6 +1,7 @@
 package charge.station.monitor.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -26,5 +27,11 @@ public class ChargeInfo {
 
     @OneToMany(mappedBy = "chargeInfo")
     private List<InOut> inOuts = new ArrayList<>();
+
+    @Builder
+    public ChargeInfo(Site site, int code){
+        this.site = site;
+        this.code = code;
+    }
 
 }
