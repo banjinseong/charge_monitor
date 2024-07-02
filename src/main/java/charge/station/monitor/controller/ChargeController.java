@@ -2,7 +2,7 @@ package charge.station.monitor.controller;
 
 import charge.station.monitor.domain.ChargeInfo;
 import charge.station.monitor.domain.Site;
-import charge.station.monitor.dto.ChargeInfoReqeustDto;
+import charge.station.monitor.dto.ChargeInfoRequestDto;
 import charge.station.monitor.dto.ChargeInfoResponseDto;
 import charge.station.monitor.dto.SiteRequestDto;
 import charge.station.monitor.dto.SiteResponseDto;
@@ -12,10 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -50,7 +47,7 @@ public class ChargeController {
      * @return
      */
     @PostMapping("/addSite")
-    public ResponseEntity<Long> addSite(@Valid SiteRequestDto dto){
+    public ResponseEntity<Long> addSite(@RequestBody @Valid SiteRequestDto dto){
         Long id = siteService.addSite(dto);
         return ResponseEntity.status(HttpStatus.OK).body(id);
     }
@@ -78,7 +75,7 @@ public class ChargeController {
      * @return
      */
     @PostMapping("/addCharge")
-    public ResponseEntity<Long> addChargeInfo(@Valid ChargeInfoReqeustDto dto){
+    public ResponseEntity<Long> addChargeInfo(@RequestBody @Valid ChargeInfoRequestDto dto){
         Long id = chargeInfoService.addChargeInfo(dto);
         return ResponseEntity.status(HttpStatus.OK).body(id);
     }

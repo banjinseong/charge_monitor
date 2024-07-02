@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChargeInfoReqeustDto {
+public class ChargeInfoRequestDto {
 
     private SiteRepository siteRepository;
 

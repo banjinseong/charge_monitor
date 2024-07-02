@@ -2,7 +2,7 @@ package charge.station.monitor.service;
 
 import charge.station.monitor.domain.ChargeInfo;
 import charge.station.monitor.domain.Site;
-import charge.station.monitor.dto.ChargeInfoReqeustDto;
+import charge.station.monitor.dto.ChargeInfoRequestDto;
 import charge.station.monitor.repository.ChargeInfoRepository;
 import charge.station.monitor.repository.SiteRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class ChargeInfoService {
     private final SiteRepository siteRepository;
 
     @Transactional
-    public Long addChargeInfo(ChargeInfoReqeustDto dto){
+    public Long addChargeInfo(ChargeInfoRequestDto dto){
         Site site = siteRepository.findById(dto.getSiteId()).get();
         ChargeInfo chargeInfo = ChargeInfo.builder()
                                         .site(site)
