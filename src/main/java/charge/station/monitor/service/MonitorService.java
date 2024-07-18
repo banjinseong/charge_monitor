@@ -32,6 +32,7 @@ public class MonitorService {
     private final ChargeInfoRepository chargeInfoRepository;
     private final SiteRepository siteRepository;
     private final InOutRepository inOutRepository;
+    private final PythonService pythonService;
 
     @Value("${upload.folder}")
     private String uploadFolder;
@@ -68,12 +69,12 @@ public class MonitorService {
     }
 
     @Transactional
-    public Long saveMonitor(MonitorRequestDto monitorRequestDto){
+    public Long saveMonitor(MonitorRequestDto monitorRequestDto, String path){
         Site site = siteRepository.findById(monitorRequestDto.getSiteId()).get();
         ChargeInfo chargeInfo = chargeInfoRepository.findByCodeAndSite(monitorRequestDto.getCode(), site).get();
         Monitor pastMonitor = monitorRepository.findLatestByChargeInfoId(chargeInfo.getId());
 
-        String currentNum="12가1324";// 현재 번호 파이썬으로 가져와야함.
+        String currentNum = pythonService.getRecognizedNumber(path);// 이미지 저장경로와 파이썬 스크립트 실행.
         String pastNum = pastMonitor.getCurrentNum();//이전 번호
         String PofPNum = pastMonitor.getPastNum();//이전전 번호
 
@@ -169,10 +170,6 @@ public class MonitorService {
         }
 
         // 2개 이하로 다르면 B 값을 반환
-        if (differenceCount <= 2) {
-            return true;
-        }else{
-            return false;
-        }
+        return differenceCount <= 2;
     }
 }

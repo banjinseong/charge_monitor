@@ -24,7 +24,7 @@ public class MonitorController {
     public ResponseEntity<Long> stillCut(@RequestBody @Valid MonitorRequestDto monitorRequestDto) throws IOException {
         String path = monitorService.getPath(monitorRequestDto);
         monitorRequestDto.setImgUrl(path);
-        Long id = monitorService.saveMonitor(monitorRequestDto);
+        Long id = monitorService.saveMonitor(monitorRequestDto, path);
         return ResponseEntity.status(HttpStatus.OK).body(id);
     }
 }
