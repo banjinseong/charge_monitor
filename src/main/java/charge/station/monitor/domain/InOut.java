@@ -1,10 +1,15 @@
 package charge.station.monitor.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "in_out")
 public class InOut {
     @Id
     @GeneratedValue
@@ -23,5 +28,17 @@ public class InOut {
 
     @Column(name = "out_time")
     private String outTime;
+
+    @Builder
+    public InOut(ChargeInfo chargeInfo, String carNum, String inTime) {
+        this.chargeInfo = chargeInfo;
+        this.carNum = carNum;
+        this.inTime = inTime;
+        this.outTime = "";
+    }
+
+    public void updateOutTime(String outTime) {
+        this.outTime = outTime;
+    }
 
 }
