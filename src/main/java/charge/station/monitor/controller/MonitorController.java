@@ -2,6 +2,7 @@ package charge.station.monitor.controller;
 
 import charge.station.monitor.dto.MonitorRequestDto;
 import charge.station.monitor.service.MonitorService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Enumeration;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,5 +32,42 @@ public class MonitorController {
         monitorRequestDto.setImgUrl(path);
         Long id = monitorService.saveMonitor(monitorRequestDto, path);
         return ResponseEntity.status(HttpStatus.OK).body(id);
+    }
+
+    @PostMapping("/imgConnection")
+    public ResponseEntity<?> saveImg(@RequestBody byte[] image, HttpServletRequest request) {
+
+        // 요청 헤더에서 사용할 값 가져오기 (예: "Image-Name" 헤더)
+        String imageNameHeader = request.getHeader("Image-Name");
+
+        // 현재 날짜와 시간을 yyyy_MM_dd_HH_mm 형식으로 포맷
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm");
+        String formattedDateTime = now.format(formatter) + ".jpg";
+        for (int i = 0; i < image.length; i++) {
+            System.out.println(i + ": " + image[i]);
+        }
+//
+        // 저장할 디렉토리 경로 (예: 서버의 "uploads" 디렉토리)
+        String uploadDir = "C://monitor/의왕/";
+
+        // 파일 저장
+        String filePath = uploadDir + formattedDateTime;
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath))) {
+            bos.write(image);
+            bos.flush();
+        } catch (IOException e) {
+            return new ResponseEntity<>("Failed to save image: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+// 헤더 값 출력
+        System.out.println("Request Headers:");
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            String headerValue = request.getHeader(headerName);
+            System.out.println(headerName + ": " + headerValue);
+        }
+        // 응답
+        return new ResponseEntity<>("File uploaded successfully: " + filePath, HttpStatus.OK);
     }
 }
