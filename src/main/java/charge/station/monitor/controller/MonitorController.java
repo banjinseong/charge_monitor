@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -44,12 +45,17 @@ public class MonitorController {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm");
         String formattedDateTime = now.format(formatter) + ".jpg";
-        for (int i = 0; i < image.length; i++) {
-            System.out.println(i + ": " + image[i]);
-        }
 //
         // 저장할 디렉토리 경로 (예: 서버의 "uploads" 디렉토리)
-        String uploadDir = "C://monitor/의왕/";
+        String uploadDir = "/app/monitor/의왕/" + imageNameHeader+"/";
+
+        // 디렉토리 확인 및 생성
+        File directory = new File(uploadDir);
+
+        if (!directory.exists()) {
+            directory.mkdirs();  // 디렉토리 생성
+        }
+
 
         // 파일 저장
         String filePath = uploadDir + formattedDateTime;
