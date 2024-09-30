@@ -78,7 +78,7 @@ public class SecurityConfig {
         // 권한 규칙 작성
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).hasRole("ADMIN")
-                        .anyRequest().permitAll()//나머지 모든 접근 가능.
+                        .anyRequest().permitAll() // 그 외 모든 요청은
 //                        .anyRequest().authenticated() 사용하면 로그인(jwt토큰)이 유효해야 접근 가능.
         );
 
